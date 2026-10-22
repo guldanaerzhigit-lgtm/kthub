@@ -12,7 +12,7 @@ cloudReady.then(userCredential=>{
     raw.forEach(a=>{const key=[a.ownerUid||'',(a.title||'').trim().toLowerCase(),a.category||'',Number(a.price)||0,(a.phone||'').replace(/\D/g,'')].join('|');if(seen.has(key)&&a.ownerUid===user.uid){duplicates.push(a.id)}else if(!seen.has(key)){seen.set(key,a.id)}});
     duplicates.forEach(id=>deleteDoc(doc(db,'ads',id)).catch(err=>console.warn('Duplicate cleanup skipped:',err)));
     const remote=raw.filter(a=>!duplicates.includes(a.id));
-    if(remote.length || snap.empty){const newItems=remote.filter(a=>!seenRemoteAdIds.has(a.id));if(lastNoticeInit&&newItems.some(a=>a.ownerUid!==user.uid)&&'Notification'in window&&Notification.permission==='granted'){toast('🔔 Жаңа хабарландыру қосылды');}remote.forEach(a=>seenRemoteAdIds.add(a.id));lastNoticeInit=true;ads=remote;localStorage.setItem('kthud_ads',JSON.stringify(ads));renderAds();}
+    if(remote.length || snap.empty){const newItems=remote.filter(a=>!seenRemoteAdIds.has(a.id));if(lastNoticeInit){const fresh=newItems.filter(a=>a.ownerUid!==user.uid);if(fresh.length&&'Notification'in window&&Notification.permission==='granted'){toast('🔔 Жаңа хабарландыру қосылды');try{new Notification('KTHuD — жаңа хабарландыру',{body:fresh[0].title||'Ауыл нарығында жаңа хабарландыру жарияланды'});}catch(_){}}}remote.forEach(a=>seenRemoteAdIds.add(a.id));lastNoticeInit=true;ads=remote;localStorage.setItem('kthud_ads',JSON.stringify(ads));renderAds();}
   },err=>{console.warn('KTHuD ads sync:',err);toast('Firestore оқу қатесі: '+(err?.message||err?.code||'unknown'));});
   const msgQuery=query(collection(db,'messages'),orderBy('createdAt','asc'));
   onSnapshot(msgQuery,snap=>{
