@@ -1,0 +1,18 @@
+{
+  "name": "KTHuD — Ауылға жақын",
+  "short_name": "KTHuD",
+  "description": "Ауылдарға арналған хабарландыру, такси және қызметтер платформасы",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f9f6",
+  "theme_color": "#138447",
+  "lang": "kk",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
