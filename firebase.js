@@ -2,7 +2,8 @@
 // Protect data with Firebase Authentication and Firestore Security Rules.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBBQgdyKR1sP6sK8Hcd3_d9vpYF0AbOfWA",
@@ -17,5 +18,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
 const cloudReady = signInAnonymously(auth);
-export { auth, db, cloudReady, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp };
+export { auth, db, storage, cloudReady, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, ref, uploadBytes, getDownloadURL };
